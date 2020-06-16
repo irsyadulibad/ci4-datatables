@@ -1,4 +1,4 @@
-# ci4-datatable
+# ci4-datatables
 Library For Server Side Datatables for CodeIgniter 4 Framework
 
 <br/>
