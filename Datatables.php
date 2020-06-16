@@ -2,7 +2,7 @@
 use \Config\Services;
 use \Config\Database;
 
-class Datatable{
+class Datatables{
 	private $db;
 	private $builder;
 	private $request;
