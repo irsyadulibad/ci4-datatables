@@ -7,8 +7,10 @@ class Datatables{
 	private $builder;
 	private $request;
 	private $table;
+	private $alias = [];
 	private $whereFields = [];
 	private $whereData;
+	private $joins = [];
 
 	public function __construct(){
 		$this->request = Services::request();
@@ -24,6 +26,7 @@ class Datatables{
 
 	public function select(String $fields){
 		$this->builder->select($fields);
+		$this->setAlias($fields);
 		return $this;
 	}
 
@@ -33,6 +36,12 @@ class Datatables{
 			$this->whereFields[] = $field;
 		}
 		$this->whereData = $data;
+		return $this;
+	}
+
+	public function join($table, $cond, $type = ''){
+		$this->joins[] = ['table' => $table, 'cond' => $cond, 'type' => $type];
+		$this->builder->join($table, $cond, $type);
 		return $this;
 	}
 
@@ -51,19 +60,39 @@ class Datatables{
 		]);
 	}
 
+	private function setAlias($data){
+		foreach(explode(',', $data) as $val){
+			if(stripos($val, 'as')){
+				$alias = trim(preg_replace('/(.*)\s+as\s+(\w*)/i', '$2', $val));
+				$field = trim(preg_replace('/(.*)\s+as\s+(\w*)/i', '$1', $val));
+				$this->alias[$alias] = $field;
+			}
+		}
+	}
+
+	private function doJoin(){
+		foreach($this->joins as $join){
+			$this->builder->join($join['table'], $join['cond'], $join['type']);
+		}
+	}
+
 	private function getFiltering($keyword){
-		$fields = $this->db->getFieldNames($this->table);
+		$fields = $this->request->getPost('columns');
 
 		$this->builder->groupStart();
-		$i = 0;
-		foreach($fields as $field){
+		for($i = 0; $i < count($fields); $i++){
 			$where = false;
+			$field = $fields[$i]['data'];
 			foreach ($this->whereFields as $data) {
 				$where = ($field == $data) ? true : false;
 			}
 			if($where) continue;
-			($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
-			$i++;
+			if(array_key_exists($field, $this->alias)){
+				$field = $this->alias[$field];
+				($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
+			}else{
+				($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
+			}
 		}
 		$this->builder->groupEnd();
 	}
@@ -87,6 +116,7 @@ class Datatables{
 	}
 
 	private function getPaging($keyword){
+		if(count($this->joins) > 0) $this->doJoin();
 		if(!is_null($this->whereData)) $this->where($this->whereData);
 		$total = $this->builder->countAllResults(false);
 		if(!is_null($keyword)) $this->getFiltering($keyword);
