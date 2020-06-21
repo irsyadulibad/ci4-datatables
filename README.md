@@ -1,5 +1,5 @@
 # ci4-datatables
-Library For Server Side Datatables for CodeIgniter 4 Framework
+Server Side Datatables Library for CodeIgniter 4 Framework
 
 <br/>
 
