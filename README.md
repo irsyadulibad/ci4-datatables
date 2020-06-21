@@ -59,6 +59,13 @@ class Example extends Controller{
   ```php
   $datatables->where(['name' => 'John']);
   ```
+3. **Join Clause**\
+  Menggabungkan table melalui field dan kondisi yang telah ditentuakn **$datatables->join('Table', 'Condition', 'Type[optional]')** :
+  ```php
+  $datatables->join('parents', 'users.id = parents.id_user');
+  //Anda juga bisa menambahkan type seperti INNER JOIN, LEFT JOIN, dsb
+  $datatables->join('parents', 'users.id = parents.id_user', 'INNER JOIN');
+  ```
 <br/>
 
 #### Catatan
