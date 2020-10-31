@@ -11,6 +11,7 @@ class Datatables{
 	private $whereFields = [];
 	private $whereData;
 	private $joins = [];
+	private $fields;
 
 	public function __construct(){
 		$this->request = Services::request();
@@ -21,6 +22,7 @@ class Datatables{
 		$db = Database::connect();
 		$this->db = $db;
 		$this->builder = $db->table($table);
+		$this->fields = $db->getFieldNames($table);
 		return $this;
 	}
 
@@ -90,8 +92,10 @@ class Datatables{
 			if(array_key_exists($field, $this->alias)){
 				$field = $this->alias[$field];
 				($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
-			}else{
+			}else if(in_array($field, $this->fields)){
 				($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
+			}else{
+				continue;
 			}
 		}
 		$this->builder->groupEnd();
