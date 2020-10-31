@@ -82,13 +82,17 @@ class Datatables{
 		$fields = $this->request->getPost('columns');
 
 		$this->builder->groupStart();
+
 		for($i = 0; $i < count($fields); $i++){
 			$where = false;
 			$field = $fields[$i]['data'];
+			$searchable = $fields[$i]['searchable'];
+
 			foreach ($this->whereFields as $data) {
 				$where = ($field == $data) ? true : false;
 			}
-			if($where) continue;
+			if($where || $searchable != 'true') continue;
+
 			if(array_key_exists($field, $this->alias)){
 				$field = $this->alias[$field];
 				($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
@@ -98,6 +102,7 @@ class Datatables{
 				continue;
 			}
 		}
+
 		$this->builder->groupEnd();
 	}
 
