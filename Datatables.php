@@ -107,9 +107,9 @@ class Datatables{
 	}
 
 	private function getOrdering(){
-		$orderField = esc($this->request->getPost('order')[0]['column']);
-		$orderAD = esc($this->request->getPost('order')[0]['dir']);
-		$orderColumn = esc($this->request->getPost('columns')[$orderField]['data']);
+		$orderField = esc($this->request->getPost('order')[0]['column']) ?? "";
+		$orderAD = esc($this->request->getPost('order')[0]['dir']) ?? "";
+		$orderColumn = esc($this->request->getPost('columns')[$orderField]['data']) ?? "";
 		$this->builder->orderBy($orderColumn, $orderAD);
 	}
 
