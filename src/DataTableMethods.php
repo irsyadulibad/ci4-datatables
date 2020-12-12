@@ -16,6 +16,8 @@ abstract class DataTableMethods
 
 	protected $isFilterApplied = false;
 
+	protected static $rawColumns = [];
+
 	public function select(String $fields)
 	{
 		$this->db->select($fields);
@@ -35,6 +37,13 @@ abstract class DataTableMethods
 	public function join($table, $cond, $type = '')
 	{
 		$this->db->join($table, $cond, $type);
+
+		return $this;
+	}
+
+	public function rawColumns(Array $cols)
+	{
+		self::$rawColumns = $cols;
 
 		return $this;
 	}
