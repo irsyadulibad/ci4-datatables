@@ -6,8 +6,6 @@ abstract class DataTableMethods
 {
 	protected $fields;
 
-	protected $whereFields = [];
-
 	protected $aliases = [];
 
 	protected $totalRecords;
@@ -30,7 +28,6 @@ abstract class DataTableMethods
 	{
 		$this->db->where($data);
 
-		$this->whereData = $data;
 		return $this;
 	}
 
@@ -53,7 +50,7 @@ abstract class DataTableMethods
 		$formatter = new JSONFormatter;
 
 		$output = [
-			'draw' => $this->request->getGet('draw'),
+			'draw' => $this->request->getDraw(),
 			'recordsTotal' => $this->totalRecords,
 			'recordsFiltered' => $this->filteredRecords,
 			'data' => $results

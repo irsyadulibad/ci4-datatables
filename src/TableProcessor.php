@@ -1,6 +1,7 @@
 <?php namespace Irsyadulibad\DataTables;
 
 use CodeIgniter\Config\Services;
+use Irsyadulibad\DataTables\Utilities\Request;
 
 class TableProcessor extends DataTableMethods
 {
@@ -13,7 +14,7 @@ class TableProcessor extends DataTableMethods
 
 	public function __construct($db, $table)
 	{
-		$this->request = Services::request();
+		$this->request = new Request;
 
 		$this->fields = $db->getFieldNames($table);
 		$this->db = $db->table($table);
@@ -35,21 +36,19 @@ class TableProcessor extends DataTableMethods
 
 	private function doQuery()
 	{
-		$search = $this->request->getGet('search');
-
 		$this->totalRecords = $this->count();
-		$this->filtering($search);
+		$this->filtering();
 		$this->filterRecords();
 		$this->ordering();
 		$this->limiting();
 	}
 
-	private function filtering($search)
+	private function filtering()
 	{
-		$fields = $this->request->getGet('columns');
-		$keyword = $search['value'] ?? '';
+		$fields = $this->request->getColumns();
+		$keyword = $this->request->getKeyword();
 
-		if(is_null($fields)) return;
+		if(is_null($keyword)) return;
 
 		$this->db->groupStart();
 
@@ -58,11 +57,7 @@ class TableProcessor extends DataTableMethods
 			$field = $fields[$i]['data'];
 			$searchable = $fields[$i]['searchable'];
 
-			foreach($this->whereFields as $data) {
-				$where = ($field == $data) ? true : false;
-			}
-
-			if($where || !$searchable) continue;
+			if(!$searchable) continue;
 
 			if(array_key_exists($field, $this->aliases)){
 				$field = $this->aliases[$field];
@@ -82,18 +77,16 @@ class TableProcessor extends DataTableMethods
 
 	private function ordering()
 	{
-		$orderField = esc($this->request->getGet('order')[0]['column']) ?? "";
-		$orderAD = esc($this->request->getGet('order')[0]['dir']) ?? "";
-		$orderColumn = esc($this->request->getGet('columns')[$orderField]['data']) ?? "";
+		$order = $this->request->getOrdering();
 
-		$this->db->orderBy($orderColumn, $orderAD);
+		$this->db->orderBy($order['column'], $order['sort']);
 	}
 
 	private function limiting()
 	{
-		$limit = $this->request->getGet('length', FILTER_SANITIZE_NUMBER_INT);
-		$start = $this->request->getGet('start', FILTER_SANITIZE_NUMBER_INT);
-		$this->db->limit($limit, $start);
+		$req = $this->request->getLimiting();
+
+		$this->db->limit($req['limit'], $req['offset']);
 	}
 
 	private function results()
