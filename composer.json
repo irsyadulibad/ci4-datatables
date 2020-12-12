@@ -1,0 +1,32 @@
+{
+	"name": "irsyadulibad/codeigniter4-datatables",
+	"description": "Server side DataTables library for CodeIgniter4 framework",
+	"keywords": [
+		"codeigniter",
+		"datatables",
+		"server side"
+	],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Ahmad Irsyadul Ibad",
+			"email": "ahmadirsyadulibad7@gmail.com",
+			"homepage": "http://irsyadulibad.my.id",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=7.2",
+		"codeigniter4/framework": "^4"
+	},
+	"autoload": {
+		"psr-4": {
+			"Irsyadulibad\\DataTables\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Irsyadulibad\\DataTables\\": "src/"
+		}
+	}
+}
