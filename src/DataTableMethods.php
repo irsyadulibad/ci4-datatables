@@ -1,0 +1,68 @@
+<?php namespace Irsyadulibad\DataTables;
+
+use CodeIgniter\Format\JSONFormatter;
+
+abstract class DataTableMethods
+{
+	protected $fields;
+
+	protected $whereFields = [];
+
+	protected $aliases = [];
+
+	protected $totalRecords;
+
+	protected $filteredRecords;
+
+	public function select(String $fields)
+	{
+		$this->db->select($fields);
+
+		$this->setAliases($fields);
+		return $this;
+	}
+
+	public function where(Array $data)
+	{
+		$this->db->where($data);
+
+		$this->whereData = $data;
+		return $this;
+	}
+
+	public function join($table, $cond, $type = '')
+	{
+		$this->db->join($table, $cond, $type);
+
+		return $this;
+	}
+
+	protected function render($results, $make)
+	{
+		$formatter = new JSONFormatter;
+
+		$output = [
+			'draw' => $this->request->getGet('draw'),
+			'recordsTotal' => $this->totalRecords,
+			'recordsFiltered' => $this->filteredRecords,
+			'data' => $results
+		];
+
+		if($make) return $formatter->format($output);
+		return d($output);
+	}
+
+	private function setAliases($fields)
+	{
+		foreach(explode(',', $fields) as $val) {
+			if(stripos($val, 'as')) {
+				$alias = trim(preg_replace('/(.*)\s+as\s+(\w*)/i', '$2', $val));
+				$field = trim(preg_replace('/(.*)\s+as\s+(\w*)/i', '$1', $val));
+
+				$this->aliases[$alias] = $field;
+			}
+		}
+
+		return true;
+	}
+}
