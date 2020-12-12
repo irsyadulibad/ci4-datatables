@@ -39,6 +39,7 @@ class TableProcessor extends DataTableMethods
 
 		$this->totalRecords = $this->count();
 		$this->filtering($search);
+		$this->filterRecords();
 		$this->ordering();
 		$this->limiting();
 	}
@@ -76,6 +77,7 @@ class TableProcessor extends DataTableMethods
 
 		$this->db->groupEnd();
 
+		$this->isFilterApplied = true;
 	}
 
 	private function ordering()
@@ -97,7 +99,6 @@ class TableProcessor extends DataTableMethods
 	private function results()
 	{
 		$result = $this->db->get();
-		$this->filteredRecords = $result->resultID->num_rows;
 		
 		return DataProcessor::processResult($result);
 	}

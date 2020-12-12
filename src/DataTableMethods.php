@@ -14,6 +14,8 @@ abstract class DataTableMethods
 
 	protected $filteredRecords;
 
+	protected $isFilterApplied = false;
+
 	public function select(String $fields)
 	{
 		$this->db->select($fields);
@@ -50,6 +52,16 @@ abstract class DataTableMethods
 
 		if($make) return $formatter->format($output);
 		return d($output);
+	}
+
+	protected function filterRecords()
+	{
+		if($this->isFilterApplied) {
+			$this->filteredRecords = $this->count();
+		} else {
+			$this->filteredRecords = $this->totalRecords;
+		}
+
 	}
 
 	private function setAliases($fields)
