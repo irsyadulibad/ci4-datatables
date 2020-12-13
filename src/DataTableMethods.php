@@ -14,7 +14,10 @@ abstract class DataTableMethods
 
 	protected $isFilterApplied = false;
 
-	protected static $rawColumns = [];
+	protected $processColumn = [
+		'hidden' => [],
+		'raws' => []
+	];
 
 	public function select(String $fields)
 	{
@@ -38,9 +41,16 @@ abstract class DataTableMethods
 		return $this;
 	}
 
+	public function hideColumns(Array $cols)
+	{
+		$this->processColumn['hidden'] = $cols;
+
+		return $this;
+	}
+
 	public function rawColumns(Array $cols)
 	{
-		self::$rawColumns = $cols;
+		$this->processColumn['raws'] = $cols;
 
 		return $this;
 	}

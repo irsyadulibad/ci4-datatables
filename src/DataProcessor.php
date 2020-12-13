@@ -1,25 +1,62 @@
 <?php namespace Irsyadulibad\DataTables;
 
-class DataProcessor extends DataTableMethods
+class DataProcessor
 {
-	public static function processResult($result)
+	protected $processColumn;
+
+	protected $results;
+
+	public function __construct($result, $process)
 	{
-		$datatables = new self;
-		$results = $result->getResultArray();
+		$this->results = $result->getResultArray();
+		$this->processColumn = $process;
+	}
+
+	public function process()
+	{
+		if(!empty($this->processColumn['hidden']))
+			$this->hide();
+		$this->escapeColumns();
+
+		return $this->results;
+	}
+
+	public function hide()
+	{
+
+		$hideCols = $this->processColumn['hidden'];
 		$i = 0;
 
-		foreach ($results as $data) {
+		foreach ($this->results as $data) {
 			foreach($data as $key => $val) {
-				// Check if raw columns exist
-				if(in_array($key, self::$rawColumns)) 
-					continue;
+				// Check if hide columns exist
+				if(in_array($key, $hideCols)) {
+					unset($this->results[$i][$key]);
+				}
 
-				$results[$i][$key] = esc($val);
+				continue;
 			}
 
 			$i++;
 		}
 
-		return $results;
+	}
+
+	public function escapeColumns()
+	{
+		$rawCols = $this->processColumn['raws'];
+		$i = 0;
+
+		foreach ($this->results as $data) {
+			foreach($data as $key => $val) {
+				// Check if raw columns exist
+				if(in_array($key, $rawCols)) 
+					continue;
+
+				$this->results[$i][$key] = esc($val);
+			}
+
+			$i++;
+		}
 	}
 }

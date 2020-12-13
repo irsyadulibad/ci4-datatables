@@ -92,8 +92,13 @@ class TableProcessor extends DataTableMethods
 	private function results()
 	{
 		$result = $this->db->get();
+
+		$processor = new DataProcessor(
+			$result,
+			$this->processColumn
+		);
 		
-		return DataProcessor::processResult($result);
+		return $processor->process();
 	}
 
 }

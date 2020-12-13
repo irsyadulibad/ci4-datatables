@@ -55,6 +55,7 @@ class Home extends BaseController
 	{
 		return DataTables::use('users')
 			->where(['role' => 'admin'])
+			->hideColumns(['password'])
 			->rawColumns(['bio'])
 			->make(true);
 	}
@@ -120,6 +121,12 @@ DataTables::use('table')
 	By default, all of the data is escaped to prevent XSS. But if you want to unescape them, you can use this method
 ```php
 ->rawColumns(['bio'])
+```
+
+* **Hide Columns**\
+	Hide columns from JSON output
+```php
+->hideColumns(['password'])
 ```
 
 ### Notes:
