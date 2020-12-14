@@ -15,6 +15,7 @@ abstract class DataTableMethods
 	protected $isFilterApplied = false;
 
 	protected $processColumn = [
+		'appends' => [],
 		'hidden' => [],
 		'raws' => []
 	];
@@ -51,6 +52,16 @@ abstract class DataTableMethods
 	public function rawColumns(Array $cols)
 	{
 		$this->processColumn['raws'] = $cols;
+
+		return $this;
+	}
+
+	public function addColumn(String $name, $callback)
+	{
+		$this->processColumn['appends'][] = [
+			'name' => $name,
+			'callback' => $callback
+		];
 
 		return $this;
 	}

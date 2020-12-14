@@ -4,21 +4,47 @@ class DataProcessor
 {
 	protected $processColumn;
 
+	protected $result;
+
 	protected $results;
 
 	public function __construct($result, $process)
 	{
+		$this->result = $result;
 		$this->results = $result->getResultArray();
 		$this->processColumn = $process;
 	}
 
 	public function process()
 	{
+		if(!empty($this->processColumn['appends']))
+			$this->addColumns();
+
 		if(!empty($this->processColumn['hidden']))
 			$this->hide();
+
 		$this->escapeColumns();
 
 		return $this->results;
+	}
+
+	public function addColumns()
+	{
+		$result = $this->result->getResult();
+		$appendCols = $this->processColumn['appends'];
+		$i = 0;
+
+		foreach($this->results as $data) {
+
+			foreach($appendCols as $append) {
+				$name = $append['name'];
+				$callback = $append['callback'];
+
+				$this->results[$i][$name] = $callback($result[$i]);
+			}
+
+			$i++;
+		}
 	}
 
 	public function hide()
@@ -39,7 +65,6 @@ class DataProcessor
 
 			$i++;
 		}
-
 	}
 
 	public function escapeColumns()

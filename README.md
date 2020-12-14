@@ -117,6 +117,15 @@ DataTables::use('table')
 ->join('address', 'users.id = address.uid', 'INNER JOIN')
 ```
 
+* **Add Column**\
+	Add custom column which is not in the table
+```php
+// <name>, <callback>
+->addColumn('action', function($data) {
+	return '<a href="/edit/'.$data->id.'">edit</a>'
+})
+```
+
 * **Raw Columns**\
 	By default, all of the data is escaped to prevent XSS. But if you want to unescape them, you can use this method
 ```php
