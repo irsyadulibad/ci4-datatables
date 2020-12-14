@@ -78,8 +78,12 @@ class TableProcessor extends DataTableMethods
 	private function ordering()
 	{
 		$order = $this->request->getOrdering();
+		$column = $order['column'];
 
-		$this->db->orderBy($order['column'], $order['sort']);
+		if(!array_key_exists($column, $this->aliases) && !in_array($column, $this->fields))
+			return;
+
+		$this->db->orderBy($column, $order['sort']);
 	}
 
 	private function limiting()
