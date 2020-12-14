@@ -122,7 +122,15 @@ DataTables::use('table')
 ```php
 // <name>, <callback>
 ->addColumn('action', function($data) {
-	return '<a href="/edit/'.$data->id.'">edit</a>'
+	return '<a href="/edit/'.$data->id.'">edit</a>';
+})
+```
+
+* **Edit Column**\
+```php
+// <name>, <callback>
+->editColumn('created_at', function($data) {
+	return format($data);
 })
 ```
 

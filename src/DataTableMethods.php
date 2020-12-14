@@ -17,7 +17,8 @@ abstract class DataTableMethods
 	protected $processColumn = [
 		'appends' => [],
 		'hidden' => [],
-		'raws' => []
+		'raws' => [],
+		'edit' => []
 	];
 
 	public function select(String $fields)
@@ -59,6 +60,16 @@ abstract class DataTableMethods
 	public function addColumn(String $name, $callback)
 	{
 		$this->processColumn['appends'][] = [
+			'name' => $name,
+			'callback' => $callback
+		];
+
+		return $this;
+	}
+
+	public function editColumn(String $name, $callback)
+	{
+		$this->processColumn['edit'][] = [
 			'name' => $name,
 			'callback' => $callback
 		];

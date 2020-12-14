@@ -20,6 +20,9 @@ class DataProcessor
 		if(!empty($this->processColumn['appends']))
 			$this->addColumns();
 
+		if(!empty($this->processColumn['edit']))
+			$this->editColumns();
+
 		if(!empty($this->processColumn['hidden']))
 			$this->hide();
 
@@ -41,6 +44,25 @@ class DataProcessor
 				$callback = $append['callback'];
 
 				$this->results[$i][$name] = $callback($result[$i]);
+			}
+
+			$i++;
+		}
+	}
+
+	public function editColumns()
+	{
+		$editCols = $this->processColumn['edit'];
+		$i = 0;
+
+		foreach($this->results as $data) {
+
+			foreach($editCols as $edit) {
+				$name = $edit['name'];
+				$callback = $edit['callback'];
+				$result = $this->results[$i][$name];
+
+				$this->results[$i][$name] = $callback($result);
 			}
 
 			$i++;
