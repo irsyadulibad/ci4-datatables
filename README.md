@@ -87,6 +87,11 @@ Now you can use this without instantiate class
 DataTables::use('table');
 ```
 
+We did not use the POST method due to a problem with the CSRF
+```php
+$routes->get('datatables/json', 'Controller::method', ['as' => 'dt-json']);
+```
+
 * **Select Table**\
 	Select the table that you want to use
 ```php
