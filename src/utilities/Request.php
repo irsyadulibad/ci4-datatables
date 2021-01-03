@@ -66,6 +66,6 @@ class Request
 
 	private function get($name = '')
 	{
-		return $this->request->getGet($name);
+		return $this->request->getPost($name);
 	}
 }
