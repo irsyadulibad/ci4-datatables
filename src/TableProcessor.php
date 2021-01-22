@@ -8,21 +8,22 @@ class TableProcessor extends DataTableMethods
 
 	protected $db;
 
-	private $table;
+	private $conn;
 
-	private $results;
+	private $table;
 
 	public function __construct($db, $table)
 	{
 		$this->request = new Request;
 
-		$this->fields = $db->getFieldNames($table);
+		$this->tables[] = $table;
+		$this->conn = $db;
 		$this->db = $db->table($table);
-		$this->table = $table;
 	}
 
 	public function make($make = true)
 	{
+		$this->setListFields();
 		$this->doQuery();
 		$results = $this->results();
 
@@ -67,7 +68,6 @@ class TableProcessor extends DataTableMethods
 			}else{
 				continue;
 			}
-
 		}
 
 		$this->db->groupEnd();
@@ -91,6 +91,14 @@ class TableProcessor extends DataTableMethods
 		$req = $this->request->getLimiting();
 
 		$this->db->limit($req['limit'], $req['offset']);
+	}
+
+	private function setListFields() {
+		foreach($this->tables as $table) {
+			$fields = $this->conn->getFieldNames($table);
+
+			$this->fields = array_merge($this->fields, $fields);
+		}
 	}
 
 	private function results()

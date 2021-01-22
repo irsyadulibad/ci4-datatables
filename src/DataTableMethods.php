@@ -4,7 +4,9 @@ use CodeIgniter\Format\JSONFormatter;
 
 abstract class DataTableMethods
 {
-	protected $fields;
+	protected $tables = [];
+
+	protected $fields = [];
 
 	protected $aliases = [];
 
@@ -38,6 +40,7 @@ abstract class DataTableMethods
 
 	public function join($table, $cond, $type = '')
 	{
+		$this->addTable($table);
 		$this->db->join($table, $cond, $type);
 
 		return $this;
@@ -114,5 +117,13 @@ abstract class DataTableMethods
 		}
 
 		return true;
+	}
+
+	private function addTable($table) {
+		if(stripos($table, 'as')) {
+			$table = trim(preg_replace('/(.*)\s+as\s+(\w*)/i', '$1', $table));
+		}
+
+		$this->tables[] = $table;
 	}
 }
