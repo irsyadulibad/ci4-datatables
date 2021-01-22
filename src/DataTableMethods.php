@@ -25,7 +25,7 @@ abstract class DataTableMethods
 
 	public function select(String $fields)
 	{
-		$this->db->select($fields);
+		$this->builder->select($fields);
 
 		$this->setAliases($fields);
 		return $this;
@@ -33,7 +33,7 @@ abstract class DataTableMethods
 
 	public function where(Array $data)
 	{
-		$this->db->where($data);
+		$this->builder->where($data);
 
 		return $this;
 	}
@@ -41,7 +41,7 @@ abstract class DataTableMethods
 	public function join($table, $cond, $type = '')
 	{
 		$this->addTable($table);
-		$this->db->join($table, $cond, $type);
+		$this->builder->join($table, $cond, $type);
 
 		return $this;
 	}

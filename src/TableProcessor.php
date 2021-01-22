@@ -6,9 +6,9 @@ use Irsyadulibad\DataTables\Utilities\Request;
 class TableProcessor extends DataTableMethods
 {
 
-	protected $db;
+	protected $builder;
 
-	private $conn;
+	private $db;
 
 	private $table;
 
@@ -17,8 +17,8 @@ class TableProcessor extends DataTableMethods
 		$this->request = new Request;
 
 		$this->tables[] = $table;
-		$this->conn = $db;
-		$this->db = $db->table($table);
+		$this->db = $db;
+		$this->builder = $db->table($table);
 	}
 
 	public function make($make = true)
@@ -32,7 +32,7 @@ class TableProcessor extends DataTableMethods
 
 	public function count()
 	{
-		return $this->db->countAllResults(false);
+		return $this->builder->countAllResults(false);
 	}
 
 	private function doQuery()
@@ -51,7 +51,7 @@ class TableProcessor extends DataTableMethods
 
 		if(is_null($keyword)) return;
 
-		$this->db->groupStart();
+		$this->builder->groupStart();
 
 		for($i = 0; $i < count($fields); $i++) {
 			$where = false;
@@ -62,15 +62,15 @@ class TableProcessor extends DataTableMethods
 
 			if(array_key_exists($field, $this->aliases)){
 				$field = $this->aliases[$field];
-				($i < 1) ? $this->db->like($field, $keyword) : $this->db->orLike($field, $keyword);
+				($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
 			}else if(in_array($field, $this->fields)){
-				($i < 1) ? $this->db->like($field, $keyword) : $this->db->orLike($field, $keyword);
+				($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
 			}else{
 				continue;
 			}
 		}
 
-		$this->db->groupEnd();
+		$this->builder->groupEnd();
 
 		$this->isFilterApplied = true;
 	}
@@ -83,19 +83,19 @@ class TableProcessor extends DataTableMethods
 		if(!array_key_exists($column, $this->aliases) && !in_array($column, $this->fields))
 			return;
 
-		$this->db->orderBy($column, $order['sort']);
+		$this->builder->orderBy($column, $order['sort']);
 	}
 
 	private function limiting()
 	{
 		$req = $this->request->getLimiting();
 
-		$this->db->limit($req['limit'], $req['offset']);
+		$this->builder->limit($req['limit'], $req['offset']);
 	}
 
 	private function setListFields() {
 		foreach($this->tables as $table) {
-			$fields = $this->conn->getFieldNames($table);
+			$fields = $this->db->getFieldNames($table);
 
 			$this->fields = array_merge($this->fields, $fields);
 		}
@@ -103,7 +103,7 @@ class TableProcessor extends DataTableMethods
 
 	private function results()
 	{
-		$result = $this->db->get();
+		$result = $this->builder->get();
 
 		$processor = new DataProcessor(
 			$result,
