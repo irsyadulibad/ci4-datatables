@@ -64,7 +64,8 @@ class TableProcessor extends DataTableMethods
 				$field = $this->aliases[$field];
 				($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
 			}else if(in_array($field, $this->fields)){
-				($i < 1) ? $this->builder->like($field, $keyword) : $this->builder->orLike($field, $keyword);
+				$mainTable = $this->tables[0];
+				($i < 1) ? $this->builder->like("$mainTable.$field", $keyword) : $this->builder->orLike("$mainTable.$field", $keyword);
 			}else{
 				continue;
 			}
