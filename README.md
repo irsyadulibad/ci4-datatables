@@ -20,10 +20,7 @@ Installation is best done via Composer, you may use the following command:
 
   > composer require irsyadulibad/codeigniter4-datatables
 
-This will add the latest release of **codeigniter4-datatables** as a module to your project. Note that
-you may need to adjust your project's
-[minimum stability ](http://webtips.krajee.com/setting-composer-minimum-stability-application/)
-in order to use this lib while it is in beta.
+This will add the latest release of **codeigniter4-datatables** as a module to your project.
 
 
 ### Manual Installation
