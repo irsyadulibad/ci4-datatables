@@ -37,6 +37,13 @@ abstract class DataTableMethods
 
 		return $this;
 	}
+	
+	public function orWhere(Array $data)
+	{
+		$this->builder->orWhere($data);
+
+		return $this;
+	}
 
 	public function join($table, $cond, $type = '')
 	{
