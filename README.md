@@ -113,6 +113,12 @@ DataTables::use('table')
 ->where(['role' => 'user', 'active' => 1])
 ```
 
+
+* **orWhere Clause**
+```php
+->orWhere(['role' => 'user', 'active' => 0])
+```
+
 * **Join Clause**
 ```php
 // <table>, <condition>, <type>
