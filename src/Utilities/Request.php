@@ -1,17 +1,11 @@
-<?php namespace Irsyadulibad\DataTables\Utilities;
+<?php
+
+namespace Irsyadulibad\DataTables\Utilities;
 
 use CodeIgniter\Config\Services;
 
 class Request
 {
-
-	private $request;
-
-	public function __construct()
-	{
-		$this->request = Services::request();
-	}
-
 	public function getColumns()
 	{
 		$cols = $this->get('columns');
@@ -66,6 +60,6 @@ class Request
 
 	private function get($name = '')
 	{
-		return $this->request->getGet($name);
+		return Services::request()->getGet($name);
 	}
 }

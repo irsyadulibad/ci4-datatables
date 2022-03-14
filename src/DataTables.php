@@ -1,7 +1,8 @@
-<?php namespace Irsyadulibad\DataTables;
+<?php
 
-use Irsyadulibad\DataTables\Processor;
-use \Config\Database;
+namespace Irsyadulibad\DataTables;
+
+use CodeIgniter\Database\Config;
 
 class DataTables
 {
@@ -13,7 +14,7 @@ class DataTables
 
 	public static function create($table)
 	{
-		$db = Database::connect();
+		$db = Config::connect();
 		return new TableProcessor($db, $table);
 	}
 }

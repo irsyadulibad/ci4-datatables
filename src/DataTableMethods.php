@@ -1,5 +1,8 @@
-<?php namespace Irsyadulibad\DataTables;
+<?php
 
+namespace Irsyadulibad\DataTables;
+
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Format\JSONFormatter;
 
 abstract class DataTableMethods
@@ -23,7 +26,9 @@ abstract class DataTableMethods
 		'edit' => []
 	];
 
-	public function select(String $fields)
+	protected BaseBuilder $builder;
+
+	public function select(string $fields)
 	{
 		$this->builder->select($fields);
 
@@ -31,21 +36,21 @@ abstract class DataTableMethods
 		return $this;
 	}
 
-	public function where(Array $data)
+	public function where(array $data)
 	{
 		$this->builder->where($data);
 
 		return $this;
 	}
 	
-	public function orWhere(Array $data)
+	public function orWhere(array $data)
 	{
 		$this->builder->orWhere($data);
 
 		return $this;
 	}
 
-	public function join($table, $cond, $type = '')
+	public function join(string $table, string $cond, string $type = '')
 	{
 		$this->addTable($table);
 		$this->builder->join($table, $cond, $type);
@@ -53,21 +58,21 @@ abstract class DataTableMethods
 		return $this;
 	}
 
-	public function hideColumns(Array $cols)
+	public function hideColumns(array $cols)
 	{
 		$this->processColumn['hidden'] = $cols;
 
 		return $this;
 	}
 
-	public function rawColumns(Array $cols)
+	public function rawColumns(array $cols)
 	{
 		$this->processColumn['raws'] = $cols;
 
 		return $this;
 	}
 
-	public function addColumn(String $name, $callback)
+	public function addColumn(string $name, callable $callback)
 	{
 		$this->processColumn['appends'][] = [
 			'name' => $name,
@@ -77,7 +82,7 @@ abstract class DataTableMethods
 		return $this;
 	}
 
-	public function editColumn(String $name, $callback)
+	public function editColumn(string $name, callable $callback)
 	{
 		$this->processColumn['edit'][] = [
 			'name' => $name,
@@ -87,7 +92,7 @@ abstract class DataTableMethods
 		return $this;
 	}
 
-	protected function render($results, $make)
+	protected function render(array $results, bool $make)
 	{
 		$formatter = new JSONFormatter;
 

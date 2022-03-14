@@ -1,21 +1,25 @@
-<?php namespace Irsyadulibad\DataTables;
+<?php
+
+namespace Irsyadulibad\DataTables;
+
+use CodeIgniter\Database\ResultInterface;
 
 class DataProcessor
 {
-	protected $processColumn;
+	protected array $processColumn;
 
-	protected $result;
+	protected ResultInterface $resultInterface;
 
-	protected $results;
+	protected array $results;
 
-	public function __construct($result, $process)
+	public function __construct(ResultInterface $result, array $columns)
 	{
-		$this->result = $result;
+		$this->resultInterface = $result;
+		$this->processColumn = $columns;
 		$this->results = $result->getResultArray();
-		$this->processColumn = $process;
 	}
 
-	public function process()
+	public function process(): array
 	{
 		if(!empty($this->processColumn['appends']))
 			$this->addColumns();
@@ -31,9 +35,9 @@ class DataProcessor
 		return $this->results;
 	}
 
-	public function addColumns()
+	public function addColumns(): void
 	{
-		$result = $this->result->getResult();
+		$result = $this->resultInterface->getResult();
 		$appendCols = $this->processColumn['appends'];
 		$i = 0;
 
@@ -50,7 +54,7 @@ class DataProcessor
 		}
 	}
 
-	public function editColumns()
+	public function editColumns(): void
 	{
 		$editCols = $this->processColumn['edit'];
 		$i = 0;
@@ -69,7 +73,7 @@ class DataProcessor
 		}
 	}
 
-	public function hide()
+	public function hide(): void
 	{
 
 		$hideCols = $this->processColumn['hidden'];
@@ -89,7 +93,7 @@ class DataProcessor
 		}
 	}
 
-	public function escapeColumns()
+	public function escapeColumns(): void
 	{
 		$rawCols = $this->processColumn['raws'];
 		$i = 0;

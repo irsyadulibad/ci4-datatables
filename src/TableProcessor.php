@@ -1,18 +1,19 @@
-<?php namespace Irsyadulibad\DataTables;
+<?php
 
-use CodeIgniter\Config\Services;
+namespace Irsyadulibad\DataTables;
+
+use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\BaseConnection;
 use Irsyadulibad\DataTables\Utilities\Request;
 
 class TableProcessor extends DataTableMethods
 {
 
-	protected $builder;
+	protected BaseBuilder $builder;
 
-	private $db;
+	private BaseConnection $db;
 
-	private $table;
-
-	public function __construct($db, $table)
+	public function __construct(BaseConnection $db, string $table)
 	{
 		$this->request = new Request;
 
@@ -21,7 +22,7 @@ class TableProcessor extends DataTableMethods
 		$this->builder = $db->table($table);
 	}
 
-	public function make($make = true)
+	public function make(bool $make = true)
 	{
 		$this->setListFields();
 		$this->doQuery();
@@ -94,7 +95,8 @@ class TableProcessor extends DataTableMethods
 		$this->builder->limit($req['limit'], $req['offset']);
 	}
 
-	private function setListFields() {
+	private function setListFields():void
+	{
 		foreach($this->tables as $table) {
 			$fields = $this->db->getFieldNames($table);
 
@@ -102,7 +104,7 @@ class TableProcessor extends DataTableMethods
 		}
 	}
 
-	private function results()
+	private function results():array
 	{
 		$result = $this->builder->get();
 
@@ -113,5 +115,4 @@ class TableProcessor extends DataTableMethods
 		
 		return $processor->process();
 	}
-
 }
