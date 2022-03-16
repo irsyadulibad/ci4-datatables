@@ -54,7 +54,7 @@ class Home extends BaseController
 			->where(['role' => 'admin'])
 			->hideColumns(['password'])
 			->rawColumns(['bio'])
-			->make(true);
+			->make();
 	}
 }
 ```
@@ -84,9 +84,11 @@ Now you can use this without instantiate class
 DataTables::use('table');
 ```
 
-We did not use the POST method due to a problem with the CSRF
+You can use both POST and GET method
 ```php
 $routes->get('datatables/json', 'Controller::method', ['as' => 'dt-json']);
+// or
+$routes->post('datatables/json', 'Controller::method', ['as' => 'dt-json']);
 ```
 
 * **Select Table**\
@@ -96,10 +98,10 @@ DataTables::use('table')
 ```
 
 * **Set Output**\
-	The default parameter is true, which is automatically return the JSON data. You can return the data's dump by passing the **false** param
+	The default parameter is false, which is automatically return the JSON data. You can return the data's dump by passing the **true** param
 ```php
 DataTables::use('table')
-	->make(false);
+	->make(true);
 ```
 
 * **Select Fields**\
@@ -134,7 +136,7 @@ DataTables::use('table')
 })
 ```
 
-* **Edit Column**\
+* **Edit Column**
 ```php
 // <name>, <callback>
 ->editColumn('created_at', function($data) {
@@ -153,10 +155,6 @@ DataTables::use('table')
 ```php
 ->hideColumns(['password'])
 ```
-
-### Notes:
-
-* For now, we don't use the POST method due to a problem with the CSRF
 
 <br />
 
