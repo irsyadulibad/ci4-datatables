@@ -1,19 +1,22 @@
-<?php namespace Irsyadulibad\DataTables;
+<?php
 
-use Irsyadulibad\DataTables\Processor;
-use \Config\Database;
+namespace Irsyadulibad\DataTables;
+
+use CodeIgniter\Database\Config;
 
 class DataTables
 {
 
-	public static function use($table)
+	public static function use($source)
 	{
-		return self::create($table);
+		return self::create($source);
 	}
 
-	public static function create($table)
+	public static function create($source)
 	{
-		$db = Database::connect();
-		return new TableProcessor($db, $table);
+		if(gettype($source) == "string") {
+			$db = Config::connect();
+			return new QueryDataTable($db, $source);
+		}
 	}
 }

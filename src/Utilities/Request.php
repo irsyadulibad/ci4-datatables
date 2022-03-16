@@ -1,71 +1,72 @@
-<?php namespace Irsyadulibad\DataTables\Utilities;
+<?php
+
+namespace Irsyadulibad\DataTables\Utilities;
 
 use CodeIgniter\Config\Services;
 
 class Request
 {
-
-	private $request;
-
-	public function __construct()
+	public static function fields(): array
 	{
-		$this->request = Services::request();
+		$columns = static::get('columns') ?? [];
+
+		return array_map(function($column) {
+			return (object)[
+				'data' => esc($column['data']),
+				'name' => esc($column['name']),
+				'searchable' => boolval($column['searchable']),
+				'orderable' => boolval($column['orderable']),
+				'search' => (object)[
+					'value' => esc($column['search']['value']),
+					'regex' => boolval($column['search']['regex'])
+				]
+			];
+		}, $columns);
 	}
 
-	public function getColumns()
+	public static function keyword(): object
 	{
-		$cols = $this->get('columns');
+		$keyword = self::get('search');
 
-		return $cols ?? null;
-	}
-
-	public function getKeyword()
-	{
-		$search = esc($this->get('search'));
-
-		return $search['value'] ?? null;
-	}
-
-	public function getLimiting()
-	{
-		$data = [
-			'limit' => intval($this->get('length') ?? 10),
-			'offset' => (int) $this->get('start')
+		return (object)[
+			'value'	=> esc($keyword['value'] ?? ''),
+			'regex' => boolval($keyword['regex'] ?? false)
 		];
-
-		return $data;
 	}
 
-	public function getDraw()
+	public static function limit(): object
 	{
-		return (int) $this->get('draw');
+		return (object)[
+			'limit' => intval(static::get('length') ?? 10),
+			'offset' => intval(static::get('start'))
+		];
 	}
 
-	public function getOrdering()
+	public static function draw()
 	{
-		if(isset($this->get('order')[0])) {
-			$field = esc($this->get('order')[0]['column'] ?? '');
-			$ascDsc = esc($this->get('order')[0]['dir'] ?? '');
+		return intval(static::get('draw'));
+	}
 
-			if(isset($this->get('columns')[$field])) {
-				$column = esc($this->get('columns')[$field]['data'] ?? '');
-			} else {
-				$column = '';
-			}
+	public static function order(): object
+	{
+		$order = static::get('order')[0] ?? null;
+		$column = $order['column'] ?? null;
 
-		} else {
-			$column = '';
-			$ascDsc = 'ASC';
+		if(!is_null($order) && !is_null($column)) {
+			return (object)[
+				'field' => static::get('columns')[$column]['data'],
+				'dir' => $order['dir'] ?? 'ASC'
+			];
 		}
 
-		return [
-			'column' => $column,
-			'sort' => $ascDsc
-			];
+		return (object)[
+			'field' => '',
+			'dir' => 'ASC'
+		];
 	}
 
-	private function get($name = '')
+	private static function get($name = '')
 	{
-		return $this->request->getGet($name);
+		return Services::request()->getGetPost($name);
 	}
 }
