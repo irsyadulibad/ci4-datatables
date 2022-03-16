@@ -4,7 +4,6 @@
 
 # ci4-datatables
 Server Side Datatables Library for CodeIgniter 4 Framework
-**NOTE: This lib is under early development.**
 
 ## Description
 Library to make server side Datatables on CodeIgniter 4 to be **more easy**
