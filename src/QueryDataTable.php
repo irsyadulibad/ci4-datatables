@@ -50,25 +50,28 @@ class QueryDataTable extends DataTableAbstract implements DataTableContract
         $keyword = Request::keyword();
         $firstLike = false;
 
-        $this->builder->groupStart();
+        if(!empty($fields)) {
+            $this->builder->groupStart();
 
-        foreach($fields as $field) {
-            if(!$field->searchable) continue;
-            if(!in_array($field->name, $this->fields)) continue;
-
-            if(array_key_exists($field->name, $this->aliases)) {
-                $field = $this->aliases[$field];
+            foreach($fields as $field) {
+                if(!$field->searchable) continue;
+                if(!in_array($field->name, $this->fields)) continue;
+    
+                if(array_key_exists($field->name, $this->aliases)) {
+                    $field = $this->aliases[$field];
+                }
+    
+                if(!$firstLike) {
+                    $this->builder->like($field->name, $keyword->value);
+                    $firstLike = true;
+                } else {
+                    $this->builder->orLike($field->name, $keyword->value);
+                }
             }
-
-            if(!$firstLike) {
-                $this->builder->like($field->name, $keyword->value);
-                $firstLike = true;
-            } else {
-                $this->builder->orLike($field->name, $keyword->value);
-            }
+    
+            if(!empty($fields)) $this->builder->groupEnd();
         }
 
-        $this->builder->groupEnd();
         $this->isFilterApplied = true;
     }
 
