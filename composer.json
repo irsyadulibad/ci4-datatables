@@ -22,7 +22,10 @@
 	"autoload": {
 		"psr-4": {
 			"Irsyadulibad\\DataTables\\": "src/"
-		}
+		},
+		"files": [
+			"src/helper.php"
+		]
 	},
 	"autoload-dev": {
 		"psr-4": {
