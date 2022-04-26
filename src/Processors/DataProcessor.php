@@ -50,7 +50,7 @@ class DataProcessor
                 $callback = $edit['callback'];
                 $data = (object)$this->results[$i];
 
-                $this->results[$i][$name] = $callback($data);
+                $this->results[$i][$name] = $callback($data->{$name}, $data);
             }
         }
     }
