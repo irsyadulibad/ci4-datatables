@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true"
+        bootstrap="vendor/codeigniter4/framework/system/Test/bootstrap.php"
+        stopOnFailure="false">
+    <testsuites>
+        <testsuite name="Test Suite">
+            <directory suffix=".php">./tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <env name="database.tests.strictOn" value="true"/>
+        <env name="database.tests.hostname" value="localhost"/>
+        <env name="database.tests.database" value="tests_datatables"/>
+        <env name="database.tests.username" value="root"/>
+        <env name="database.tests.password" value="root"/>
+        <env name="database.tests.DBDriver" value="MySQLi"/>
+        <env name="database.tests.DBPrefix" value=""/>
+    </php>
+</phpunit>
