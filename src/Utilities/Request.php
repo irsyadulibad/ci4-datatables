@@ -48,11 +48,12 @@ class Request
 	public static function order(): object
 	{
 		$order = static::get('order')[0] ?? null;
+		$columns = static::get('columns');
 		$column = $order['column'] ?? null;
 
-		if(!is_null($order) && !is_null($column)) {
+		if(!is_null($order) && !is_null($column) && !is_null($columns)) {
 			return (object)[
-				'field' => static::get('columns')[$column]['data'],
+				'field' => $columns[$column]['data'],
 				'dir' => $order['dir'] ?? 'ASC'
 			];
 		}
