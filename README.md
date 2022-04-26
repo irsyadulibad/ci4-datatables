@@ -138,8 +138,13 @@ DataTables::use('table')
 * **Edit Column**
 ```php
 // <name>, <callback>
-->editColumn('created_at', function($data) {
-	return format($data);
+->editColumn('created_at', function($value) {
+	return format($value);
+})
+
+// or with data as second parameter
+->editColumn('color', function($value, $data) {
+	return "$value {$data->type}";
 })
 ```
 
