@@ -53,14 +53,14 @@ class UserRequest
         'regex' => 'false'
     ];
 
-    public static function body()
+    public function body()
     {
         return [
-            'draw' => self::$draw,
-            'columns' => self::$columns,
-            'order' => self::$order,
-            'length' => self::$length,
-            'search' => self::$search
+            'draw' => $this->draw,
+            'columns' => $this->columns,
+            'order' => $this->order,
+            'length' => $this->length,
+            'search' => $this->search
         ];
     }
 }

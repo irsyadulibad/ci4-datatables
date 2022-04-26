@@ -8,6 +8,8 @@ use Irsyadulibad\DataTables\Utilities\Request;
 
 class RequestTest extends CIUnitTestCase
 {
+    protected UserRequest $userReq;
+
     public function setUp(): void
     {
         parent::setUp();

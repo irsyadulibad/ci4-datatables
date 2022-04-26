@@ -64,12 +64,12 @@ class Request
 		];
 	}
 
-	private static function toBool($value)
+	protected static function toBool($value)
 	{
 		return filter_var($value, FILTER_VALIDATE_BOOLEAN);
 	}
 
-	private static function get($name = '')
+	protected static function get($name = '')
 	{
 		return isset($_GET[$name]) ? $_GET[$name] : $_POST[$name] ?? null;
 	}
