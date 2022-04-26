@@ -54,6 +54,9 @@ class Home extends BaseController
 			->hideColumns(['password'])
 			->rawColumns(['bio'])
 			->make();
+			
+		// or with helper function
+		return datatables('users')->make();
 	}
 }
 ```
@@ -81,6 +84,10 @@ $('#table').DataTable({
 Now you can use this without instantiate class
 ```php
 DataTables::use('table');
+
+// or with helper function
+
+datatables('table')
 ```
 
 You can use both POST and GET method
