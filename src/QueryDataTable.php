@@ -54,18 +54,20 @@ class QueryDataTable extends DataTableAbstract implements DataTableContract
             $this->builder->groupStart();
 
             foreach($fields as $field) {
+                $fieldName = strlen($field->name) > 0 ? $field->name : $field->data;
+
                 if(!$field->searchable) continue;
-                if(!in_array($field->name, $this->fields)) continue;
+                if(!in_array($fieldName, $this->fields)) continue;
     
-                if(array_key_exists($field->name, $this->aliases)) {
+                if(array_key_exists($fieldName, $this->aliases)) {
                     $field = $this->aliases[$field];
                 }
     
                 if(!$firstLike) {
-                    $this->builder->like($field->name, $keyword->value);
+                    $this->builder->like($fieldName, $keyword->value);
                     $firstLike = true;
                 } else {
-                    $this->builder->orLike($field->name, $keyword->value);
+                    $this->builder->orLike($fieldName, $keyword->value);
                 }
             }
     
