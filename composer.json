@@ -19,17 +19,26 @@
 		"php": ">=7.2",
 		"codeigniter4/framework": "^4"
 	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.5",
+		"fakerphp/faker": "^1.19",
+		"phpstan/phpstan": "^1.6"
+	},
 	"autoload": {
 		"psr-4": {
 			"Irsyadulibad\\DataTables\\": "src/"
 		},
 		"files": [
 			"src/helper.php"
+		],
+		"exclude-from-classmap": [
+			"**/Database/Migrations/**"
 		]
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Irsyadulibad\\DataTables\\": "src/"
+			"Irsyadulibad\\DataTables\\Tests\\": "tests",
+			"Irsyadulibad\\DataTables\\Tests\\Support\\": "tests/_support"
 		}
 	}
 }

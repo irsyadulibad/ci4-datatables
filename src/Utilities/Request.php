@@ -2,8 +2,6 @@
 
 namespace Irsyadulibad\DataTables\Utilities;
 
-use CodeIgniter\Config\Services;
-
 class Request
 {
 	public static function fields(): array
@@ -14,11 +12,11 @@ class Request
 			return (object)[
 				'data' => esc($column['data']),
 				'name' => esc($column['name']),
-				'searchable' => boolval($column['searchable']),
-				'orderable' => boolval($column['orderable']),
+				'searchable' => static::toBool($column['searchable']),
+				'orderable' => static::toBool($column['orderable']),
 				'search' => (object)[
 					'value' => esc($column['search']['value']),
-					'regex' => boolval($column['search']['regex'])
+					'regex' => static::toBool($column['search']['regex'])
 				]
 			];
 		}, $columns);
@@ -30,7 +28,7 @@ class Request
 
 		return (object)[
 			'value'	=> esc($keyword['value'] ?? ''),
-			'regex' => boolval($keyword['regex'] ?? false)
+			'regex' => static::toBool($keyword['regex'] ?? false)
 		];
 	}
 
@@ -50,11 +48,12 @@ class Request
 	public static function order(): object
 	{
 		$order = static::get('order')[0] ?? null;
+		$columns = static::get('columns');
 		$column = $order['column'] ?? null;
 
-		if(!is_null($order) && !is_null($column)) {
+		if(!is_null($order) && !is_null($column) && !is_null($columns)) {
 			return (object)[
-				'field' => static::get('columns')[$column]['data'],
+				'field' => $columns[$column]['data'],
 				'dir' => $order['dir'] ?? 'ASC'
 			];
 		}
@@ -65,8 +64,13 @@ class Request
 		];
 	}
 
-	private static function get($name = '')
+	protected static function toBool($value)
 	{
-		return Services::request()->getGetPost($name);
+		return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+	}
+
+	protected static function get($name = '')
+	{
+		return isset($_GET[$name]) ? $_GET[$name] : $_POST[$name] ?? null;
 	}
 }
