@@ -13,10 +13,10 @@ class UserSeeder extends Seeder
             
             for($i = 1; $i <= 1000; $i++) {
                 $data[] = [
-                    'username' => $this->faker()->userName(),
-                    'email' => $this->faker()->email(),
-                    'password' => $this->faker()->password(),
-                    'name' => $this->faker()->name(),
+                    'username' => 'username-' . $i,
+                    'email' => 'email-' . $i,
+                    'password' => 'password-' . $i,
+                    'name' => 'name' . $i,
                 ];
             }
     
