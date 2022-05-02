@@ -71,7 +71,7 @@ class QueryDataTable extends DataTableAbstract implements DataTableContract
                 }
             }
     
-            if(!empty($fields)) $this->builder->groupEnd();
+            $this->builder->groupEnd();
         }
 
         $this->isFilterApplied = true;
