@@ -37,6 +37,15 @@ class QueryDataTableTest extends TestCase
     }
 
     /** @test */
+    public function it_can_operate_without_columns_request()
+    {
+        $_GET = [];
+        $dt = datatables('users')->make();
+
+        $this->assertObjectHasAttribute('recordsFiltered', json_decode($dt));
+    }
+
+    /** @test */
     public function it_return_valid_columns()
     {
         $dt = datatables('users')->make();
