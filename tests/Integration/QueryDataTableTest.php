@@ -155,4 +155,31 @@ class QueryDataTableTest extends TestCase
         $dt = datatables('users')->select('name as user_name')->make();
         $this->assertEquals('name999', json_decode($dt)->data[0]->user_name);
     }
+
+    /** @test */
+    public function it_can_join_another_table()
+    {
+        $dt = datatables('users')->select('users.*, addresses.name as address')
+                ->join('addresses', 'users.id = addresses.user_id')
+                ->make();
+        $data = json_decode($dt);
+
+        $this->assertEquals(1000, $data->recordsTotal);
+        $this->assertEquals(1000, $data->recordsFiltered);
+        $this->assertObjectHasAttribute('address', $data->data[0]);
+    }
+
+    /** @test */
+    public function it_can_search_joined_table_fields()
+    {
+        $_GET['search'] = [
+            'value' => 'al',
+            'regex' => 'false'
+        ];
+
+        $dt = datatables('users')->select('users.*, addresses.name as address')
+                ->join('addresses', 'users.id = addresses.user_id')
+                ->make();
+        $this->assertNotEquals(1000, json_decode($dt)->recordsFiltered);
+    }
 }
