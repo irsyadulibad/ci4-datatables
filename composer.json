@@ -21,8 +21,8 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.5",
-		"fakerphp/faker": "^1.19",
-		"phpstan/phpstan": "^1.6"
+		"phpstan/phpstan": "^1.6",
+		"fakerphp/faker": "^1.19"
 	},
 	"autoload": {
 		"psr-4": {

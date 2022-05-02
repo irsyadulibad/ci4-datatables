@@ -79,15 +79,17 @@ class QueryDataTable extends DataTableAbstract implements DataTableContract
 
     private function orderRecords()
     {
-        $order = Request::order();
+        $column = Request::order();
 
-        if(array_key_exists($order->field, $this->aliases)) {
-            $this->builder->orderBy($this->aliases[$order->field], $order->dir);
+        if(!$column->orderable) return;
+
+        if(array_key_exists($column->field, $this->aliases)) {
+            $this->builder->orderBy($this->aliases[$column->field], $column->dir);
             return;
         }
 
-        if(in_array($order->field, $this->fields)) {
-            $this->builder->orderBy($order->field, $order->dir);
+        if(in_array($column->field, $this->fields)) {
+            $this->builder->orderBy($column->field, $column->dir);
         }
     }
 
