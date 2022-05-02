@@ -136,4 +136,23 @@ class QueryDataTableTest extends TestCase
         $dt = datatables('users')->hideColumns(['username'])->make();
         $this->assertObjectNotHasAttribute('username', json_decode($dt)->data[0]);
     }
+
+    /** @test */
+    public function it_can_use_column_alias()
+    {
+        $dt = datatables('users')->select('name as user_name')->make();
+        $this->assertObjectHasAttribute('user_name', json_decode($dt)->data[0]);
+    }
+
+    /** @test */
+    public function it_can_order_column_alias()
+    {
+        $_GET['order'][0] = [
+            'column' => '0',
+            'dir' => 'desc'
+        ];
+
+        $dt = datatables('users')->select('name as user_name')->make();
+        $this->assertEquals('name999', json_decode($dt)->data[0]->user_name);
+    }
 }
