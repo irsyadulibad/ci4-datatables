@@ -1,6 +1,7 @@
 ![GitHub](https://img.shields.io/github/license/irsyadulibad/ci4-datatables)
 ![GitHub repo size](https://img.shields.io/github/repo-size/irsyadulibad/ci4-datatables?label=size)
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=irsyadulibad/ci4-datatables)
+![Testing Status](https://github.com/irsyadulibad/ci4-datatables/workflows/tests/badge.svg)
 
 # ci4-datatables
 Server Side Datatables Library for CodeIgniter 4 Framework
