@@ -18,6 +18,7 @@ class BuilderDataTable extends DataTableAbstract implements DataTableContract
     {
         $this->totalRecords = $this->countTotal();
         $this->filterRecords();
+        $this->countFiltered();
         $this->orderRecords();
         $this->limitRecords();
 
