@@ -5,10 +5,13 @@ namespace Irsyadulibad\DataTables;
 use CodeIgniter\Database\BaseConnection;
 use Irsyadulibad\DataTables\Contracts\DataTableContract;
 use Irsyadulibad\DataTables\Processors\DataProcessor;
+use Irsyadulibad\DataTables\Traits\QueryMethods;
 use Irsyadulibad\DataTables\Utilities\Request;
 
 class QueryDataTable extends DataTableAbstract implements DataTableContract
 {
+    use QueryMethods;
+
     private BaseConnection $connection;
 
     public function __construct(BaseConnection $conn, string $table)
@@ -103,5 +106,26 @@ class QueryDataTable extends DataTableAbstract implements DataTableContract
     {
         $result = $this->builder->get();
         return (new DataProcessor($result, $this->columnDef))->result();
+    }
+
+    /**
+     * Count all total records
+     */
+    protected function countTotal()
+    {
+        return $this->builder->countAllResults(false);
+    }
+
+    /**
+     * Count filtered records
+     */
+    protected function countFiltered()
+    {
+        if($this->isFilterApplied) {
+            $this->filteredRecords = $this->countTotal();
+            return;
+        }
+
+        $this->filteredRecords = $this->totalRecords;
     }
 }
