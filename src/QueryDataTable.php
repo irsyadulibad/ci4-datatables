@@ -107,25 +107,4 @@ class QueryDataTable extends DataTableAbstract implements DataTableContract
         $result = $this->builder->get();
         return (new DataProcessor($result, $this->columnDef))->result();
     }
-
-    /**
-     * Count all total records
-     */
-    protected function countTotal()
-    {
-        return $this->builder->countAllResults(false);
-    }
-
-    /**
-     * Count filtered records
-     */
-    protected function countFiltered()
-    {
-        if($this->isFilterApplied) {
-            $this->filteredRecords = $this->countTotal();
-            return;
-        }
-
-        $this->filteredRecords = $this->totalRecords;
-    }
 }

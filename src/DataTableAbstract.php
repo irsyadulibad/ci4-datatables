@@ -2,6 +2,7 @@
 
 namespace Irsyadulibad\DataTables;
 
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Format\JSONFormatter;
 
 abstract class DataTableAbstract
@@ -35,6 +36,8 @@ abstract class DataTableAbstract
      * @var bool
      */
     protected $isFilterApplied = false;
+
+    protected BaseBuilder $builder;
 
     /**
      * Hide column from response
@@ -108,5 +111,26 @@ abstract class DataTableAbstract
         }
 
         return d($output);
+    }
+
+    /**
+     * Count all total records
+     */
+    protected function countTotal()
+    {
+        return $this->builder->countAllResults(false);
+    }
+
+    /**
+     * Count filtered records
+     */
+    protected function countFiltered()
+    {
+        if($this->isFilterApplied) {
+            $this->filteredRecords = $this->countTotal();
+            return;
+        }
+
+        $this->filteredRecords = $this->totalRecords;
     }
 }
