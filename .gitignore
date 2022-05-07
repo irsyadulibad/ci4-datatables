@@ -4,4 +4,4 @@ composer.lock
 phpunit.xml
 phpstan.neon
 .phpunit.result.cache
-.hugo_build.lock
+.docusaurus
