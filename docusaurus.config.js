@@ -9,6 +9,7 @@ const config = {
   title: 'CI4-DataTables Docs',
   tagline: 'Library to make server side Datatables on CodeIgniter 4 to be more easy',
   url: 'https://ci4-datatables.netlify.app',
+  // url: 'http://localhost:3000',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -24,7 +25,7 @@ const config = {
   // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'id'],
   },
 
   presets: [
@@ -55,6 +56,14 @@ const config = {
             label: 'Docs',
           },
           {
+            type: 'docsVersionDropdown',
+            position: 'right',
+          },
+          {
+            type: 'localeDropdown',
+            position: 'right'
+          },
+          {
             href: 'https://github.com/irsyadulibad/ci4-datatables',
             label: 'GitHub',
             position: 'right',
@@ -68,6 +77,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ['php', 'bash']
       },
     }),
 };

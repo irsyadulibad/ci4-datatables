@@ -1,13 +1,13 @@
 ---
 sidebar_position: 1
 category: intro-index
-description: Introduction of CodeIgniter4 DataTables 
+description: Pengfenalan untuk CodeIgniter4 DataTables 
 ---
 
-# Introduction
-CI4-DataTables is a datatables library that will speed up you to create serverside datatable API using the [CodeIgniter v4](https://codeigniter.com) framework.
+# Pengenalan
+CI4-DataTables adalah sebuah library yang akan membantu anda membuat API datatables serverside dengan cepat menggunakan framework [CodeIgniter v4](https://codeigniter.com).
 
-This is an example code for using this library:
+Berikut adalah contoh penggunaannya
 
 PHP:
 ```php
