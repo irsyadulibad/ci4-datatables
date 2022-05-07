@@ -61,7 +61,7 @@ Menambah kolom yang tidak terdapat pada tabel
 ```php
 // <name>, <callback>
 ->editColumn('created_at', function($data) {
-    return format($data);
+    return format($data->created_at);
 })
 ```
 

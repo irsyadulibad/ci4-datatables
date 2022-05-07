@@ -61,7 +61,7 @@ Add custom column which is not in the table
 ```php
 // <name>, <callback>
 ->editColumn('created_at', function($data) {
-    return format($data);
+    return format($data->created_at);
 })
 ```
 
