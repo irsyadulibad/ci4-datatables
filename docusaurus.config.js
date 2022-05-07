@@ -50,14 +50,14 @@ const config = {
         title: 'CI4-DataTables',
         items: [
           {
+            type: 'docsVersionDropdown',
+            position: 'left',
+          },
+          {
             type: 'doc',
             docId: 'intro',
             position: 'left',
             label: 'Docs',
-          },
-          {
-            type: 'docsVersionDropdown',
-            position: 'right',
           },
           {
             type: 'localeDropdown',
@@ -72,7 +72,7 @@ const config = {
       },
       footer: {
         style: 'dark',
-        copyright: `Copyright © ${new Date().getFullYear()} irsyadulibad, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} irsyadulibad. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
