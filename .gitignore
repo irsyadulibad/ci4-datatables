@@ -18,3 +18,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# From other branch
+.phpunit.result.cache
+composer.lock
+phpunit.xml
+vendor
