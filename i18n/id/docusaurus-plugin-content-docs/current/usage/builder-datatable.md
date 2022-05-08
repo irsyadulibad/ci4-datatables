@@ -1,26 +1,38 @@
-# Dokumentasi
+---
+sidebar_position: 2
+---
+# Builder DataTable
+
+## Pengenalan
+
+`Builder datatable` lebih fleksibel dibandingkan `Query DataTable` sebelumnya. Anda dapat menggunakan semua builder yang telah codeigniter4 sediakan. [Baca dokumentasinya disini](http://codeigniter.com/user_guide/database/query_builder.html)
 
 ## Inisialisasi
-### Dengan Helper (Direkomendasikan)
+
+### Helper Method (Recommended)
 ```php
-datatables('table');
+$query = db_connect()->table('table');
+return datatables($query)->make();
 ```
 
-### Dengan Class Name
+### Class Name Method
 ```php
-<?php
 use Irsyadulibad\DataTables\DataTables;
 
-DataTables::use('table');
-?>
+$query = db_connect()->table('table');
+return DataTables::use($query)->make();
 ```
 
-## Method yang Tersedia
-Berikut adalah method yang tersedia untuk digunakan pada libray ini:
-### Select Table
-Pilih tabel yang ingin anda gunakan
+## Penggunaan
+Anda dapat menggunakan query builder seperti biasa, lalu meneruskannya pada datatables
+
 ```php
-DataTables::use('table')
+$table = db_connect()->table('users');
+$query = $table->select('users.*, addresses.name as address')
+            ->where('users.role', 'admin')
+            ->join('addresses', 'users.id = addresses.user_id');
+
+return datatables($query)->make();
 ```
 
 ### Set Output
@@ -30,30 +42,9 @@ DataTables::use('table')
 	->make(true);
 ```
 
-### Select Fields
-Memilih kolom spesifik pada tabel
-```php
-->select('username, password')
-```
+## Column Editing
+`Builder DataTable` juga dapat melakukan penyuntingan pada kolom sebelum dikeluarkan menjadi JSON
 
-### Where Clause
-```php
-->where(['role' => 'user', 'active' => 1])
-```
-
-### orWhere Clause
-```php
-->orWhere(['role' => 'user', 'active' => 0])
-```
-
-### Join Clause
-```php
-// <table>, <condition>, <type>
-->join('address', 'users.id = address.uid', 'INNER JOIN')
-```
-
-## Column editing
-Anda dapat mengganti struktur kolom
 ### Add Column
 Menambah kolom yang tidak terdapat pada tabel
 ```php

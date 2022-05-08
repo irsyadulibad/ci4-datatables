@@ -1,7 +1,8 @@
 # Catatan Rilis
 
-### CI4-DataTables v2.1.0
+### CI4-DataTables next
 
-- Menambah fungsi helper `datatables()`
-- Menambah parameter pada callable fungsi `editColumn` menjadi `value` dan `data`
-- Membaca dari `data` saat nama kolom tidak didefinisikan
+- Skip proses pengurutan saat nama kolom tidak didefinisikan
+- Menambah [Builder DataTables](./usage/builder-datatable.md)
+- Menambah test case ``untuk tujuan pengembangan``
+- Menambah github workflow ``untuk testing pengembangan``

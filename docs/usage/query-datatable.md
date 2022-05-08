@@ -1,22 +1,24 @@
-# Documentation
+---
+sidebar_position: 1
+---
+# Query DataTable
 
 ## Initialization
-### With Helper (Recommended for shortest syntax)
+
+### With helper (Recommended)
 ```php
-datatables('table');
+datatables('users')
 ```
 
 ### With Class Name
 ```php
-<?php
 use Irsyadulibad\DataTables\DataTables;
 
-DataTables::use('table');
-?>
+DataTables::use('table')
 ```
 
-## Available Methods
-The following methods are available to be used in this library
+## Usage
+
 ### Select Table
 Select the table that you want to use
 ```php
@@ -69,7 +71,6 @@ Add custom column which is not in the table
 ->editColumn('created_at', function($value) {
 	return format($value);
 })
-
 // or with data as second parameter
 ->editColumn('color', function($value, $data) {
 	return "$value {$data->type}";

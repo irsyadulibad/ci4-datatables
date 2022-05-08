@@ -1,7 +1,9 @@
 # Release Notes
 
-### CI4-DataTables v2.1.0
+### CI4-DataTables v2.1.1
 
-- Added `datatables()` function helper
-- Add parameter at edit column's callable to `value` and `data`
-- Fix read from data when column's name not defined
+- Skip ordering when column is not orderable
+- Added [Builder DataTables](./usage/builder-datatable.md)
+- Add test case ``for development purposes``
+- Add github workflow ``for development test``
+
