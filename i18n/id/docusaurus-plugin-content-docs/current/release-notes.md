@@ -1,6 +1,6 @@
 # Catatan Rilis
 
-### CI4-DataTables next
+### CI4-DataTables Next
 
 - Skip proses pengurutan saat nama kolom tidak didefinisikan
 - Menambah [Builder DataTables](./usage/builder-datatable.md)

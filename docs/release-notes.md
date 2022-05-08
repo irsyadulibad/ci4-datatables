@@ -1,6 +1,6 @@
 # Release Notes
 
-### CI4-DataTables v2.1.1
+### CI4-DataTables Next
 
 - Skip ordering when column is not orderable
 - Added [Builder DataTables](./usage/builder-datatable.md)
