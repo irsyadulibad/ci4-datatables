@@ -158,6 +158,16 @@ class QueryDataTableTest extends TestCase
     }
 
     /** @test */
+    public function it_can_use_custom_index_column()
+    {
+        $dt = datatables('users')->addIndexColumn('RowIndex')->make();
+        $data = json_decode($dt)->data[0];
+
+        $this->assertObjectHasAttribute('RowIndex', $data);
+        $this->assertEquals(1, $data->RowIndex);
+    }
+
+    /** @test */
     public function it_can_use_column_alias()
     {
         $dt = datatables('users')->select('name as user_name')->make();
