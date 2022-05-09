@@ -7,7 +7,7 @@
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=irsyadulibad/ci4-datatables)
 ![Testing Status](https://github.com/irsyadulibad/ci4-datatables/workflows/tests/badge.svg)
 
-Datatables library that will speed up you to create serverside datatable API using the CodeIgniter v4 framework.
+Library that will speed up you to create serverside DataTables API using the CodeIgniter v4 framework.
 
 ```php
 return datatables('users')->make();
@@ -19,8 +19,8 @@ return datatables($query)->make();
 
 
 ## Requirements
-* [Codeigniter Framework v4](https://github.com/codeigniter4/CodeIgniter4)
-* [JQuery Datatables](https://datatables.net)
+* [CodeIgniter Framework v4](https://github.com/codeigniter4/CodeIgniter4)
+* [JQuery DataTables](https://datatables.net)
 
 ## Installation
 
