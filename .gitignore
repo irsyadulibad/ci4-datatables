@@ -23,4 +23,5 @@ yarn-error.log*
 .phpunit.result.cache
 composer.lock
 phpunit.xml
+phpstan.neon
 vendor

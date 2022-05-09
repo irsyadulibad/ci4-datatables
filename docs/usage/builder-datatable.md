@@ -77,3 +77,12 @@ Hide columns from JSON output
 ```php
 ->hideColumns(['password'])
 ```
+
+### Index Column
+In some cases, you need to track the index of the records on your response. This method will add another column on your response with default name is `DT_RowIndex`.
+```php
+->addIndexColumn()
+
+// with custom column name
+->addIndexColumn('CustomRowIndex')
+```

@@ -78,3 +78,12 @@ Menghilangkan kolom dari output JSON
 ```php
 ->hideColumns(['password'])
 ```
+
+### Index Column
+Dalam beberapa kasus, anda mungkin perlu menampilkan index kolom dari data yang anda tampilkan, seperti untuk memberikan nomor dll. Fungsi ini akan menambah sebuah kolom bernama default `DT_RowIndex`.
+```php
+->addIndexColumn()
+
+// dengan nama kustom
+->addIndexColumn('CustomRowIndex')
+```
