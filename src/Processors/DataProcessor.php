@@ -24,6 +24,8 @@ class DataProcessor
 
         if(!empty($this->columnDef['hide'])) $this->hideFields();
 
+        if($this->columnDef['index']) $this->addIndexField();
+
         $this->escapeFields();
 
         return $this->results;
@@ -75,6 +77,13 @@ class DataProcessor
 
                 $this->results[$i][$key] = esc($val);
             }
+        }
+    }
+
+    private function addIndexField(): void
+    {
+        for($i = 0; $i < count($this->results); $i++) {
+            $this->results[$i]['DT_RowIndex'] = $i + 1;
         }
     }
 }

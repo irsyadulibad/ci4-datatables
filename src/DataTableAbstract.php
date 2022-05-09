@@ -94,6 +94,15 @@ abstract class DataTableAbstract
     }
 
     /**
+     * Add indexed column to JSON response
+     */
+    public function addIndexColumn()
+    {
+        $this->columnDef['index'] = true;
+        return $this;
+    }
+
+    /**
      * Render response data
      * 
      */
