@@ -6,8 +6,6 @@ sidebar_position: 2
 ## Introduction
 The `Builder DataTable` is more flexible than the previous `Query DataTable`. You can use all the builders that codeigniter4 has provided. [Read the docs here](http://codeigniter.com/user_guide/database/query_builder.html)
 
-`Builder datatable` lebih fleksibel dibandingkan `Query DataTable` sebelumnya. Anda dapat menggunakan semua builder yang telah codeigniter4 sediakan. [Baca dokumentasinya disini](http://codeigniter.com/user_guide/database/query_builder.html)
-
 ## Initialization
 
 ### Helper Method
@@ -27,7 +25,6 @@ return DataTables::use($query)->make();
 
 ## Usage
 You can use the query builder as usual, then pass it on the `datatables`
-Anda dapat menggunakan pembuat kueri seperti biasa, lalu meneruskannya pada datatables
 
 ```php
 $table = db_connect()->table('users');
