@@ -11,7 +11,10 @@ abstract class DataTableAbstract
      * Column to be processed
      */
     protected array $columnDef = [
-        'index' => false,
+        'index' => [
+            'indexed' => false,
+            'rowID' => 'DT_RowIndex'
+        ],
         'append' => [],
         'edit' => [],
         'hide' => [],
@@ -90,6 +93,19 @@ abstract class DataTableAbstract
             'callback' => $callback
         ];
 
+        return $this;
+    }
+
+    /**
+     * Add indexed column to JSON response
+     * 
+     * @param string $rowid | row index name
+     */
+    public function addIndexColumn(string $rowid = null)
+    {
+        $this->columnDef['index']['indexed'] = true;
+
+        if(!is_null($rowid)) $this->columnDef['index']['rowID'] = $rowid;
         return $this;
     }
 

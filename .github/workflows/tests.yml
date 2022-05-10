@@ -41,3 +41,6 @@ jobs:
 
       - name: Testing with PHPUnit
         run: vendor/bin/phpunit --verbose
+
+      - name: Testing with PHPStan
+        run: vendor/bin/phpstan -v

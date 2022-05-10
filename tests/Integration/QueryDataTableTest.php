@@ -147,6 +147,27 @@ class QueryDataTableTest extends TestCase
     }
 
     /** @test */
+    public function it_can_add_indexed_column()
+    {
+        $dt = datatables('users')->addIndexColumn()->make();
+        $res = json_decode($dt);
+
+        $this->assertObjectHasAttribute('DT_RowIndex', $res->data[0]);
+        $this->assertEquals(2, $res->data[1]->DT_RowIndex);
+        $this->assertEquals(10, $res->data[9]->DT_RowIndex);
+    }
+
+    /** @test */
+    public function it_can_use_custom_index_column()
+    {
+        $dt = datatables('users')->addIndexColumn('RowIndex')->make();
+        $data = json_decode($dt)->data[0];
+
+        $this->assertObjectHasAttribute('RowIndex', $data);
+        $this->assertEquals(1, $data->RowIndex);
+    }
+
+    /** @test */
     public function it_can_use_column_alias()
     {
         $dt = datatables('users')->select('name as user_name')->make();
@@ -163,6 +184,21 @@ class QueryDataTableTest extends TestCase
 
         $dt = datatables('users')->select('name as user_name')->make();
         $this->assertEquals('name999', json_decode($dt)->data[0]->user_name);
+    }
+
+    /** @test */
+    public function it_can_search_column_alias()
+    {
+        $_GET['search'] = [
+            'value' => 'email-1000',
+            'regex' => 'false'
+        ];
+
+        $_GET['columns'][2]['name'] = 'user_email';
+        $_GET['columns'][2]['data'] = 'user_email';
+
+        $dt = datatables('users')->select('email as user_email')->make();
+        $this->assertEquals(1, json_decode($dt)->recordsFiltered);
     }
 
     /** @test */
