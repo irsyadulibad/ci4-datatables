@@ -167,6 +167,21 @@ class BuilderDataTableTest extends TestCase
     }
 
     /** @test */
+    public function it_can_search_column_alias()
+    {
+        $_GET['search'] = [
+            'value' => 'email-1000',
+            'regex' => 'false'
+        ];
+
+        $_GET['columns'][2]['name'] = 'user_email';
+        $_GET['columns'][2]['data'] = 'user_email';
+
+        $dt = datatables('users')->select('email as user_email')->make();
+        $this->assertEquals(1, json_decode($dt)->recordsFiltered);
+    }
+
+    /** @test */
     public function it_can_join_another_table()
     {
         $builder = $this->builder->select('users.*, addresses.name as address')

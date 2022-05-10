@@ -51,21 +51,22 @@ class QueryDataTable extends DataTableAbstract implements DataTableContract
     {
         $fields = Request::fields();
         $keyword = Request::keyword();
-        $firstLike = false;
 
         if(!empty($fields)) {
             $this->builder->groupStart();
+            $firstLike = false;
 
             foreach($fields as $field) {
                 $fieldName = strlen($field->name) > 0 ? $field->name : $field->data;
 
                 if(!$field->searchable) continue;
-                if(!in_array($fieldName, $this->fields)) continue;
-    
+
                 if(array_key_exists($fieldName, $this->aliases)) {
-                    $field = $this->aliases[$field];
+                    $fieldName = $this->aliases[$fieldName];
                 }
-    
+
+                if(!in_array($fieldName, $this->fields)) continue;
+
                 if(!$firstLike) {
                     $this->builder->like($fieldName, $keyword->value);
                     $firstLike = true;
@@ -73,7 +74,7 @@ class QueryDataTable extends DataTableAbstract implements DataTableContract
                     $this->builder->orLike($fieldName, $keyword->value);
                 }
             }
-    
+
             $this->builder->groupEnd();
         }
 
