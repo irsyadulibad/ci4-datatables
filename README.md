@@ -5,6 +5,7 @@
 ![GitHub](https://img.shields.io/github/license/irsyadulibad/ci4-datatables)
 ![GitHub repo size](https://img.shields.io/github/repo-size/irsyadulibad/ci4-datatables?label=size)
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=irsyadulibad/ci4-datatables)
+![Packagist Downloads](https://img.shields.io/packagist/dt/irsyadulibad/codeigniter4-datatables)
 ![Testing Status](https://github.com/irsyadulibad/ci4-datatables/workflows/tests/badge.svg)
 
 Library that will speed up you to create serverside DataTables API using the CodeIgniter v4 framework.
