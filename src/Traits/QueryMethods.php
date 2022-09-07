@@ -57,6 +57,12 @@ trait QueryMethods
         return $this;
     }
 
+    public function orderBy($orderBy, $direction)
+    {
+        $this->builder->orderBy($orderBy, $direction);
+        return $this;
+    }
+
     /**
      * Join table
      * 
