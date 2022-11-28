@@ -134,7 +134,10 @@ abstract class DataTableAbstract
      */
     protected function countTotal()
     {
-        return $this->builder->countAllResults(false);
+        // for DB Driver non MySQLi use countAllResults()
+        // return $this->builder->countAllResults(false);
+        // for DB Driver MySQLi use countAll()
+        return $this->builder->countAll(false);
     }
 
     /**
