@@ -37,17 +37,17 @@ trait QueryMethods
     /**
      * Select the fields to be executed
      */
-    public function select(string $fields)
+        public function select(string $fields,  ?bool $escape = null)
     {
-        $this->builder->select($fields);
+        $this->builder->select($fields, $escape);
         $this->setAliases($fields);
 
         return $this;
     }
 
-    public function where($key, $value = null)
+        public function where($key, $value = null, ?bool $escape = null)
     {
-        $this->builder->where($key, $value);
+        $this->builder->where($key, $value, $escape);
         return $this;
     }
 
@@ -64,10 +64,10 @@ trait QueryMethods
      * @param string $cond | join condition
      * @param string $type | join type: 'INNER', 'LEFT', 'RIGHT'
      */
-    public function join(string $table, string $cond, string $type = 'INNER')
+    public function join(string $table, string $cond, ?string $type = '', ?bool $escape = null)
 	{
 		$this->addTable($table);
-		$this->builder->join($table, $cond, $type);
+		$this->builder->join($table, $cond, $type, $escape);
 
 		return $this;
 	}
@@ -77,7 +77,7 @@ trait QueryMethods
      * 
      * @param string $fields
      */
-    private function setAliases(string $fields): void
+    private function setAliases(?string $fields): void
 	{
 		foreach(explode(',', $fields) as $val) {
 			if(stripos($val, 'as')) {
