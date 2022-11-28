@@ -51,10 +51,11 @@ class QueryDataTable extends DataTableAbstract implements DataTableContract
     {
         $fields = Request::fields();
         $keyword = Request::keyword();
+        $firstLike = false;
 
         if(!empty($fields)) {
             $this->builder->groupStart();
-            $firstLike = false;
+            
 
             foreach($fields as $field) {
                 $fieldName = strlen($field->name) > 0 ? $field->name : $field->data;
